@@ -26,6 +26,42 @@ The hero uses the supplied silent molecular/ER video with a solid black left-sid
 - `assets/`: optimized web images used by the prototype.
 - `references/`: local source/archive files, including the attached paper PDF and original lab-provided TIF.
 
+## Ownership and Hosting
+
+The repository is owned by Shanshan's GitHub account:
+
+- Repository: https://github.com/shanshanliu1218-oss/ShanShanLiuLab
+- Public site: https://shanshanliulab.com/
+- GitHub Pages source: `main` branch, project root (`/`)
+- GitHub Pages custom domain: `shanshanliulab.com`
+- HTTPS: enforced in GitHub Pages settings
+
+The root `CNAME` file must stay as:
+
+```txt
+shanshanliulab.com
+```
+
+Do not change the repo `CNAME` file to `www.shanshanliulab.com`. The canonical site is the apex domain, and `www` should redirect to it.
+
+Expected DNS records at the domain registrar:
+
+```txt
+A      @      185.199.108.153
+A      @      185.199.109.153
+A      @      185.199.110.153
+A      @      185.199.111.153
+CNAME  www    shanshanliu1218-oss.github.io
+```
+
+If the repository is transferred again, update the `www` CNAME target to the new GitHub Pages owner host, usually `<new-owner>.github.io`. The apex `A` records should remain the GitHub Pages IPs above.
+
+Local git remotes for active maintenance should point to:
+
+```bash
+git remote set-url origin https://github.com/shanshanliu1218-oss/ShanShanLiuLab.git
+```
+
 ## Source Notes
 
 Primary source:
@@ -54,8 +90,10 @@ Google Scholar was not fully machine-readable in this environment. The publicati
 ## Asset Notes
 
 - `assets/molecular-er-reference.png`: user-provided molecular/ER visual benchmark.
-- `assets/molecular-er-hero.webp` and `.jpg`: optimized still versions retained as poster and fallback assets.
-- `assets/molecular-er-hero-motion.mp4`: user-provided silent motion hero video.
+- `assets/liu-lab-hero-loop.mp4`: optimized silent hero background video used on the live homepage.
+- `assets/liu-lab-hero-poster.jpg`: poster image for the live hero video.
+- `assets/molecular-er-hero.webp` and `.jpg`: earlier optimized still versions retained as fallback/reference assets.
+- `assets/molecular-er-hero-motion.mp4`: earlier silent motion hero video retained as a source/reference asset.
 - `references/22-49-3_Beads_035.tif`: original lab-provided ER pulldown beads TIF from Shanshan.
 - `assets/beads-microscopy-crop.webp` and `.jpg`: cropped, web-optimized versions used as the Join section background.
 - `assets/erip-beads-*.webp` and `.jpg`: cropped, web-optimized ER-IP bead microscopy slideshow images generated from lab-provided TIFs. The bottom microscope metadata strip was removed for web presentation.
@@ -97,11 +135,39 @@ Then visit `http://localhost:4173`.
 
 ## Deployment
 
-For Vercel static deployment:
+This site is currently deployed with GitHub Pages, not Vercel.
 
-1. Push this folder to a GitHub repository.
-2. Import the repository in Vercel.
-3. Use no build command for this static prototype.
-4. Set the output directory to the project root.
+Current deployment workflow:
+
+1. Make edits locally.
+2. Preview with `python -m http.server 4173`.
+3. Commit changes to `main`.
+4. Push to `origin main`.
+5. GitHub Pages serves the static files from the repository root.
+6. Verify the live site at https://shanshanliulab.com/.
+
+There is no build command and no package install step for the current static version.
+
+Useful live checks:
+
+```bash
+curl -I https://shanshanliulab.com/
+curl -I https://www.shanshanliulab.com/
+curl -I https://shanshanliulab.com/assets/liu-lab-hero-loop.mp4
+```
+
+Expected behavior:
+
+- `https://shanshanliulab.com/` returns `200 OK`.
+- `https://www.shanshanliulab.com/` redirects to `https://shanshanliulab.com/`.
+- GitHub Pages reports `status=built`, `cname=shanshanliulab.com`, and HTTPS enforced.
+
+## Maintenance Notes
+
+- Keep public copy factual and source-grounded.
+- Do not use Yale logos, seals or official Yale branding unless explicit permission is provided.
+- Keep production-ready media optimized in `assets/`; large raw exports should generally stay local or in `references/` only when there is a clear archival reason.
+- Update `content/site-content.js` for routine text, publication, people, news and contact changes.
+- Update `sitemap.xml` only if real standalone pages are added. Anchor sections on this one-page site do not need separate sitemap entries.
 
 For a future Astro or Next.js version, move the content records into typed modules and use the framework build command.
