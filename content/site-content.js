@@ -199,6 +199,11 @@ window.LAB_CONTENT = {
       doi: "10.1126/science.adf4154",
       source: "Science",
       link: "https://doi.org/10.1126/science.adf4154",
+      image: {
+        src: "assets/publication-mitochondrial-glutathione-2023.webp",
+        fallback: "assets/publication-mitochondrial-glutathione-2023.jpg",
+        alt: "Mitochondrial membrane and glutathione transporter artwork associated with the 2023 Science publication."
+      },
       featured: true
     },
     {
