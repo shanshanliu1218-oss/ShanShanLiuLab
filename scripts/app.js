@@ -1,5 +1,7 @@
 (function () {
   const content = window.LAB_CONTENT;
+  const copyrightYear = document.querySelector("#copyright-year");
+  if (copyrightYear) copyrightYear.textContent = new Date().getFullYear();
 
   function externalTarget(link) {
     return link.startsWith("#") ? "_self" : "_blank";
