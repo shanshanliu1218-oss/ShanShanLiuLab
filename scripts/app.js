@@ -93,7 +93,7 @@
     document.querySelector("#process-steps").innerHTML = content.processSteps
       .map(
         (step, index) => `
-        <article class="process-step ${index === 0 ? "is-active" : ""}" data-step-index="${index}">
+        <article class="process-step" data-step-index="${index}">
           <code>${step.short}</code>
           <div>
             <strong>${String(index + 1).padStart(2, "0")} / ${step.title}</strong>
@@ -292,39 +292,12 @@
     queueNext();
   }
 
-  function initProcessVideoScrub() {
-    const section = document.querySelector("#mechanism");
+  function initProcessVideo() {
     const video = document.querySelector("#process-video");
-    const steps = Array.from(document.querySelectorAll(".process-step"));
-    if (!section || !video || !steps.length) return;
+    if (!video) return;
 
-    let ticking = false;
-
-    const clamp = (value) => Math.min(1, Math.max(0, value));
-
-    const update = () => {
-      ticking = false;
-      const rect = section.getBoundingClientRect();
-      const travel = Math.max(1, rect.height - window.innerHeight);
-      const progress = clamp((0 - rect.top) / travel);
-      const activeIndex = Math.min(steps.length - 1, Math.floor(progress * steps.length));
-
-      steps.forEach((step, index) => {
-        step.classList.toggle("is-active", index === activeIndex);
-      });
-    };
-
-    const requestUpdate = () => {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(update);
-    };
-
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
     video.playbackRate = 1.5;
     video.play().catch(() => {});
-    requestUpdate();
   }
 
   function initPublicationLightbox() {
@@ -386,7 +359,7 @@
   renderContent();
   initNav();
   initEripSlideshow();
-  initProcessVideoScrub();
+  initProcessVideo();
   initPublicationLightbox();
 
   document.querySelectorAll("video[autoplay]").forEach((video) => {
