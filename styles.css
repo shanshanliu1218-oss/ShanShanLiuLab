@@ -1210,6 +1210,11 @@ p {
   font-weight: 800;
 }
 
+.contact-row a {
+  color: var(--teal);
+  text-decoration: none;
+}
+
 .footer {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
